@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,72 +8,140 @@
       content="upgrade-insecure-requests"
     />
     <link rel="canonical" href="https://clawtvos.com/" />
-    <title>ClawTVOS</title>
+    <title>ClawTVOS — Calm TV software, built for the big screen</title>
     <meta
       name="description"
-      content="ClawTVOS — 面向大屏的简洁体验，站点建设中。"
+      content="ClawTVOS is a living-room experience for modern TVs—clear layout, thoughtful motion, and a focus on what matters from the sofa."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
     />
     <style>
       :root {
-        --bg: #0c0e10;
-        --fg: #e8eaed;
-        --muted: #9aa0a6;
-        --accent: #14b8a6;
-        --accent-2: #f97316;
-        --card: #14181c;
-        --radius: 16px;
+        --bg-deep: #07080a;
+        --bg-elev: #0e1014;
+        --fg: #eef1f4;
+        --muted: #9aa3ad;
+        --line: rgba(255, 255, 255, 0.09);
+        --teal: #2dd4bf;
+        --teal-dim: rgba(45, 212, 191, 0.14);
+        --ember: #fb923c;
+        --ember-dim: rgba(251, 146, 60, 0.12);
+        --radius-lg: 20px;
+        --radius-xl: 28px;
+        --shadow-hero: 0 28px 100px rgba(0, 0, 0, 0.55),
+          0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+        --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system,
+          "Segoe UI", sans-serif;
+        --font-display: "Instrument Serif", ui-serif, Georgia, serif;
       }
-      * {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
       }
       body {
         margin: 0;
         min-height: 100dvh;
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-          "Helvetica Neue", Arial, "Noto Sans", "PingFang SC",
-          "Microsoft YaHei", sans-serif;
-        background: radial-gradient(
-            120% 80% at 50% -20%,
-            rgba(20, 184, 166, 0.18),
+        font-family: var(--font-sans);
+        font-optical-sizing: auto;
+        color: var(--fg);
+        line-height: 1.65;
+        background-color: var(--bg-deep);
+        background-image: radial-gradient(
+            ellipse 100% 80% at 50% -30%,
+            var(--teal-dim),
             transparent 55%
           ),
-          var(--bg);
-        color: var(--fg);
-        line-height: 1.6;
+          radial-gradient(
+            ellipse 70% 50% at 100% 20%,
+            var(--ember-dim),
+            transparent 45%
+          ),
+          radial-gradient(
+            900px 500px at 10% 90%,
+            rgba(45, 212, 191, 0.06),
+            transparent 50%
+          ),
+          linear-gradient(180deg, #0a0c0f 0%, var(--bg-deep) 38%, #050607 100%);
+        background-attachment: fixed;
       }
       .wrap {
-        max-width: 960px;
+        max-width: 1040px;
         margin: 0 auto;
-        padding: clamp(1.25rem, 4vw, 2.5rem);
+        padding: clamp(1.25rem, 4.5vw, 2.75rem);
       }
       header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: clamp(1.25rem, 3vw, 2rem);
       }
       .brand {
+        display: flex;
+        align-items: baseline;
+        gap: 0.35rem;
         font-weight: 700;
-        letter-spacing: 0.04em;
-        font-size: 1.125rem;
-      }
-      .brand span {
-        color: var(--accent);
-      }
-      .pill {
-        font-size: 0.75rem;
-        padding: 0.35rem 0.65rem;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        letter-spacing: 0.06em;
+        font-size: 0.8125rem;
+        text-transform: uppercase;
         color: var(--muted);
       }
+      .brand strong {
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        font-size: 1.05rem;
+        color: var(--fg);
+        text-transform: none;
+      }
+      .brand strong span {
+        color: var(--teal);
+      }
+      .pill {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.45rem 0.85rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--muted);
+        backdrop-filter: blur(10px);
+      }
+      .hero-frame {
+        position: relative;
+        border-radius: var(--radius-xl);
+        padding: 1px;
+        background: linear-gradient(
+          135deg,
+          rgba(45, 212, 191, 0.35),
+          rgba(255, 255, 255, 0.08) 40%,
+          rgba(251, 146, 60, 0.25)
+        );
+        box-shadow: var(--shadow-hero);
+      }
+      .hero-frame::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: radial-gradient(
+          120% 60% at 50% 0%,
+          rgba(255, 255, 255, 0.06),
+          transparent 55%
+        );
+      }
       .hero {
-        border-radius: var(--radius);
+        position: relative;
+        border-radius: calc(var(--radius-xl) - 1px);
         overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        background: var(--card);
-        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+        background: var(--bg-elev);
       }
       .hero img {
         display: block;
@@ -82,62 +150,124 @@
         vertical-align: middle;
       }
       main {
-        margin-top: 1.75rem;
+        margin-top: clamp(2rem, 4vw, 2.75rem);
+      }
+      .eyebrow {
+        font-size: 0.6875rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--teal);
+        margin: 0 0 0.65rem;
       }
       h1 {
-        font-size: clamp(1.5rem, 4vw, 2rem);
-        font-weight: 650;
-        margin: 0 0 0.5rem;
+        font-family: var(--font-display);
+        font-weight: 400;
+        font-style: italic;
+        font-size: clamp(2.1rem, 5.2vw, 3.35rem);
+        line-height: 1.12;
         letter-spacing: -0.02em;
+        margin: 0 0 1rem;
+        max-width: 18ch;
       }
-      p {
+      h1 em {
+        font-style: normal;
+        background: linear-gradient(120deg, var(--fg) 0%, #b8c0cc 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .lead {
         margin: 0;
+        font-size: 1.0625rem;
         color: var(--muted);
-        max-width: 42rem;
+        max-width: 38rem;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+      }
+      .chip {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--muted);
+        padding: 0.4rem 0.75rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
       }
       footer {
-        margin-top: 3rem;
-        padding-top: 1.25rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        margin-top: clamp(2.5rem, 5vw, 3.5rem);
+        padding-top: 1.35rem;
+        border-top: 1px solid var(--line);
         font-size: 0.8125rem;
         color: var(--muted);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 1rem;
       }
       a.inline {
-        color: var(--accent-2);
+        color: var(--ember);
         text-decoration: none;
+        font-weight: 500;
       }
       a.inline:hover {
         text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          transition: none !important;
+        }
       }
     </style>
   </head>
   <body>
     <div class="wrap">
       <header>
-        <div class="brand">Claw<span>TV</span>OS</div>
-        <div class="pill">Coming soon</div>
+        <div class="brand">
+          <strong>Claw<span>TV</span>OS</strong>
+        </div>
+        <div class="pill">In development</div>
       </header>
 
-      <div class="hero">
-        <img
-          src="assets/clawtvos-hero.png"
-          width="1920"
-          height="1080"
-          alt="ClawTVOS 界面概念图：大屏上的简洁媒体中心体验"
-          loading="eager"
-          decoding="async"
-        />
+      <div class="hero-frame">
+        <div class="hero">
+          <img
+            src="assets/clawtvos-hero.png"
+            width="1920"
+            height="1080"
+            alt="ClawTVOS product visualization: a refined TV interface with calm typography and focused content"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
       </div>
 
       <main>
-        <h1>大屏体验，由此开始</h1>
-        <p>
-          ClawTVOS 正在筹备中。当前页面用于验证域名、HTTPS 与发布流程；后续会在此陆续更新产品与文档。
+        <p class="eyebrow">Big screen, quiet interface</p>
+        <h1><em>TV software</em> that feels intentional.</h1>
+        <p class="lead">
+          ClawTVOS is an early preview of a calmer living-room OS—fewer
+          distractions, clearer hierarchy, and motion that respects distance
+          and low light. We are shaping the product in public; this page will
+          evolve as documentation and releases land.
         </p>
+        <div class="chips" aria-label="Focus areas">
+          <span class="chip">10-foot readability</span>
+          <span class="chip">Low-glance navigation</span>
+          <span class="chip">Privacy-minded defaults</span>
+        </div>
       </main>
 
       <footer>
-        © <span id="y"></span> ClawTVOS ·
+        <span>© <span id="y"></span> ClawTVOS</span>
+        <span aria-hidden="true">·</span>
         <a class="inline" href="https://clawtvos.com/">clawtvos.com</a>
       </footer>
     </div>
