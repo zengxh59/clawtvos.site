@@ -8,334 +8,108 @@
       content="upgrade-insecure-requests"
     />
     <link rel="canonical" href="https://clawtvos.com/" />
-    <title>ClawTVOS — Software for the living room</title>
+    <title>ClawTVOS</title>
     <meta
       name="description"
-      content="ClawTVOS is calm, readable TV software—built for distance, low light, and the remote in your hand."
+      content="ClawTVOS — calm software for the living-room screen."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Syne:wght@500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        --ink: #050607;
-        --panel: #0b0d11;
-        --panel-2: #11141a;
-        --fg: #e9edf2;
-        --muted: #8b95a5;
-        --line: rgba(255, 255, 255, 0.08);
-        --mint: #5eead4;
-        --mint-2: #0f766e;
-        --ember: #fdba74;
-        --glow: rgba(94, 234, 212, 0.12);
-        --font-display: "Syne", system-ui, sans-serif;
-        --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system,
-          "Segoe UI", sans-serif;
-        --r: 18px;
-        --r-lg: 24px;
+        --bg: #08090a;
+        --fg: #f4f5f7;
+        --muted: #6b7280;
+        --accent: #34d399;
+        --font: "Outfit", ui-sans-serif, system-ui, sans-serif;
       }
       *,
       *::before,
       *::after {
         box-sizing: border-box;
       }
-      html {
-        scroll-behavior: smooth;
-      }
       body {
         margin: 0;
         min-height: 100dvh;
-        font-family: var(--font-body);
+        font-family: var(--font);
         color: var(--fg);
-        line-height: 1.55;
-        background: var(--ink);
-        background-image: linear-gradient(
-            180deg,
-            rgba(94, 234, 212, 0.06) 0%,
-            transparent 42%
-          ),
-          radial-gradient(
-            1200px 700px at 85% -10%,
-            rgba(253, 186, 116, 0.07),
-            transparent 55%
-          ),
-          repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 56px,
-            rgba(255, 255, 255, 0.02) 56px,
-            rgba(255, 255, 255, 0.02) 57px
-          ),
-          repeating-linear-gradient(
-            90deg,
-            transparent,
-            transparent 56px,
-            rgba(255, 255, 255, 0.02) 56px,
-            rgba(255, 255, 255, 0.02) 57px
-          );
-        background-attachment: fixed;
-      }
-      .wrap {
-        max-width: 1080px;
-        margin: 0 auto;
-        padding: clamp(1.25rem, 4vw, 2.75rem);
-        min-height: 100dvh;
+        background: var(--bg);
+        background-image: radial-gradient(
+          ellipse 80% 50% at 50% -20%,
+          rgba(52, 211, 153, 0.08),
+          transparent 55%
+        );
         display: flex;
         flex-direction: column;
       }
-      header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-        margin-bottom: clamp(2rem, 5vw, 3.25rem);
-      }
-      .logo {
-        font-family: var(--font-display);
-        font-weight: 800;
-        font-size: 1.05rem;
-        letter-spacing: -0.03em;
-        color: var(--fg);
-      }
-      .logo span {
-        color: var(--mint);
-      }
-      .badge {
-        font-size: 0.6875rem;
-        font-weight: 600;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--muted);
-        border: 1px solid var(--line);
-        padding: 0.45rem 0.85rem;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.02);
-      }
-      .stage {
-        position: relative;
+      main {
         flex: 1;
-        display: grid;
-        gap: clamp(1.75rem, 4vw, 2.5rem);
-        padding: clamp(1.25rem, 3vw, 2rem);
-        border-radius: var(--r-lg);
-        background: linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.04) 0%,
-          transparent 45%
-        );
-        border: 1px solid var(--line);
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35) inset,
-          0 40px 100px rgba(0, 0, 0, 0.45);
-        overflow: hidden;
-      }
-      .stage::before,
-      .stage::after {
-        content: "";
-        position: absolute;
-        width: 44px;
-        height: 44px;
-        border: 2px solid rgba(94, 234, 212, 0.35);
-        pointer-events: none;
-      }
-      .stage::before {
-        top: 1rem;
-        left: 1rem;
-        border-right: none;
-        border-bottom: none;
-        border-radius: 6px 0 0 0;
-      }
-      .stage::after {
-        bottom: 1rem;
-        right: 1rem;
-        border-left: none;
-        border-top: none;
-        border-radius: 0 0 6px 0;
-      }
-      .stage-inner {
-        position: relative;
-        z-index: 1;
-        display: grid;
-        gap: clamp(1.75rem, 4vw, 2.75rem);
-      }
-      @media (min-width: 880px) {
-        .stage-inner {
-          grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-          align-items: start;
-        }
-      }
-      .kicker {
-        margin: 0;
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--mint);
-      }
-      .headline {
-        margin: 0.35rem 0 0;
-        font-family: var(--font-display);
-        font-weight: 700;
-        font-size: clamp(2.35rem, 6vw, 3.75rem);
-        line-height: 1.05;
-        letter-spacing: -0.04em;
-      }
-      .headline .line {
-        display: block;
-      }
-      .headline .accent {
-        display: inline-block;
-        margin-top: 0.35rem;
-        padding: 0.2rem 0.65rem 0.25rem;
-        border-radius: 999px;
-        font-size: clamp(1.35rem, 3.8vw, 2.1rem);
-        letter-spacing: -0.03em;
-        color: var(--ink);
-        background: linear-gradient(120deg, var(--mint), #99f6e4);
-        box-shadow: 0 12px 40px var(--glow);
-      }
-      .lede {
-        margin: 1rem 0 0;
-        font-size: 1.0625rem;
-        color: var(--muted);
-        max-width: 34rem;
-      }
-      .meta-row {
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem 1.25rem;
-        margin-top: 1.5rem;
-        padding-top: 1.25rem;
-        border-top: 1px solid var(--line);
-        font-size: 0.8125rem;
-        color: var(--muted);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(1.5rem, 5vw, 3rem);
+        text-align: center;
       }
-      .meta-row strong {
-        color: var(--fg);
-        font-weight: 600;
-      }
-      .cards {
-        display: grid;
-        gap: 0.85rem;
-      }
-      .card {
-        border-radius: var(--r);
-        padding: 1.1rem 1.15rem;
-        background: var(--panel);
-        border: 1px solid var(--line);
-        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
-      }
-      .card h3 {
-        margin: 0 0 0.35rem;
-        font-family: var(--font-display);
-        font-size: 0.95rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-      }
-      .card p {
+      h1 {
         margin: 0;
-        font-size: 0.9rem;
-        color: var(--muted);
-        line-height: 1.5;
+        font-weight: 200;
+        font-size: clamp(3.25rem, 14vw, 8.5rem);
+        line-height: 0.95;
+        letter-spacing: -0.045em;
+        text-transform: uppercase;
       }
-      .card .idx {
-        font-size: 0.6875rem;
+      h1 .claw {
+        font-weight: 300;
+      }
+      h1 .tv {
         font-weight: 700;
-        letter-spacing: 0.12em;
-        color: var(--mint-2);
-        margin-bottom: 0.45rem;
+        color: var(--accent);
+      }
+      h1 .os {
+        font-weight: 300;
+      }
+      .tag {
+        margin: 1.25rem 0 0;
+        font-size: 0.8125rem;
+        font-weight: 400;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--muted);
       }
       footer {
-        margin-top: auto;
-        padding-top: clamp(1.75rem, 4vw, 2.5rem);
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 0.5rem 1rem;
-        font-size: 0.8125rem;
+        padding: 1.25rem;
+        text-align: center;
+        font-size: 0.75rem;
+        font-weight: 400;
+        letter-spacing: 0.06em;
         color: var(--muted);
       }
       footer a {
-        color: var(--ember);
+        color: inherit;
         text-decoration: none;
-        font-weight: 500;
       }
       footer a:hover {
-        text-decoration: underline;
-        text-underline-offset: 3px;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
+        color: var(--accent);
       }
     </style>
   </head>
   <body>
-    <div class="wrap">
-      <header>
-        <div class="logo">Claw<span>TV</span>OS</div>
-        <div class="badge">In development</div>
-      </header>
-
-      <section class="stage" aria-labelledby="hero-title">
-        <div class="stage-inner">
-          <div>
-            <p class="kicker">Living-room software</p>
-            <h1 id="hero-title" class="headline">
-              <span class="line">Calm enough</span>
-              <span class="line">for the sofa.</span>
-              <span class="line accent">Sharp on the glass.</span>
-            </h1>
-            <p class="lede">
-              ClawTVOS is a rethink of the TV stack: fewer panels, clearer
-              hierarchy, and motion tuned for ten-foot viewing. This site is a
-              lightweight beacon while the product takes shape—no trackers, no
-              clutter, just the message.
-            </p>
-            <div class="meta-row" aria-label="Product notes">
-              <span><strong>Focus</strong> · readability &amp; distance</span>
-              <span><strong>Input</strong> · remote-first flows</span>
-              <span><strong>Stance</strong> · privacy-minded defaults</span>
-            </div>
-          </div>
-          <div class="cards">
-            <article class="card">
-              <div class="idx">01</div>
-              <h3>One job per screen</h3>
-              <p>
-                TV UI fails when everything competes for attention. We bias
-                toward a single primary action and quiet secondary paths.
-              </p>
-            </article>
-            <article class="card">
-              <div class="idx">02</div>
-              <h3>Glanceable, not noisy</h3>
-              <p>
-                Typography, spacing, and contrast are tuned for arm’s-length
-                reading in mixed lighting—not desktop density on a wall.
-              </p>
-            </article>
-            <article class="card">
-              <div class="idx">03</div>
-              <h3>Built in public</h3>
-              <p>
-                Expect this page to stay minimal: announcements, docs, and
-                downloads will land here as milestones ship.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <footer>
-        <span>© <span id="y"></span> ClawTVOS</span>
-        <span aria-hidden="true">·</span>
-        <a href="https://clawtvos.com/">clawtvos.com</a>
-      </footer>
-    </div>
+    <main>
+      <h1 id="logo" aria-label="ClawTVOS">
+        <span class="claw">Claw</span><span class="tv">TV</span><span class="os">OS</span>
+      </h1>
+      <p class="tag">Living-room OS</p>
+    </main>
+    <footer>
+      <span>© <span id="y"></span></span>
+      ·
+      <a href="https://clawtvos.com/">clawtvos.com</a>
+    </footer>
     <script>
       document.getElementById("y").textContent = new Date().getFullYear();
     </script>
