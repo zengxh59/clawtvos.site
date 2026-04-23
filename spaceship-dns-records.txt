@@ -1,5 +1,5 @@
 # Spaceship DNS — clawtvos.com → GitHub Pages
-# 仓库：https://github.com/zengxh59/clawtvos.site
+# 仓库：https://github.com/zengxh59/cto.site
 # 官方 IP 列表见：https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
 
 # 根域名 apex（主机名 @ 或 clawtvos.com，以 Spaceship 面板为准）

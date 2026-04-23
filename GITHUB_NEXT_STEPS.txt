@@ -6,8 +6,8 @@ ClawTVOS — GitHub Pages 与域名（本机执行）
 2) 创建远程仓库、推送 main、启用 Pages（分支 main、根目录）
    cd /path/to/clawtvos.site
    bash scripts/bootstrap-github-pages.sh
-   当前仓库已创建：https://github.com/zengxh59/clawtvos.site
-   Pages 冒烟地址：https://zengxh59.github.io/clawtvos.site/
+   当前仓库：https://github.com/zengxh59/cto.site
+   Pages 冒烟地址：https://zengxh59.github.io/cto.site/
 
 3) 在 GitHub 绑定自定义域名（建议在配置 DNS 之前先在 GitHub 保存域名，降低被抢注风险）
    任选其一：

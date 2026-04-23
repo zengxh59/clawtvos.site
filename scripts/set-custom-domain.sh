@@ -7,11 +7,11 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
 USER_LOGIN="$(gh api user -q .login)"
-REPO_NAME="${GITHUB_REPO_NAME:-clawtvos.site}"
+REPO_NAME="${GITHUB_REPO_NAME:-cto.site}"
 FULL_REPO="${USER_LOGIN}/${REPO_NAME}"
 
 if ! gh api "repos/${FULL_REPO}/pages" -X PUT --input - <<JSON
-{"cname":"clawtvos.com","https_enforced":true,"source":{"branch":"main","path":"/"},"public":true}
+{"cname":"clawtvos.com","https_enforced":true,"source":{"branch":"main","path":"/"}}
 JSON
 then
   echo "若提示证书尚未就绪：先在 Spaceship 配好 DNS，等待后再执行本脚本或在网页勾选 Enforce HTTPS。" >&2

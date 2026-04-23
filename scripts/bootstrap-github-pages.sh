@@ -12,7 +12,7 @@ if ! gh auth status >/dev/null 2>&1; then
 fi
 
 USER_LOGIN="$(gh api user -q .login)"
-REPO_NAME="${GITHUB_REPO_NAME:-clawtvos.site}"
+REPO_NAME="${GITHUB_REPO_NAME:-cto.site}"
 FULL_REPO="${USER_LOGIN}/${REPO_NAME}"
 
 if git remote get-url origin >/dev/null 2>&1; then
