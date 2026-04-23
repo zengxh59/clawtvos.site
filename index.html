@@ -24,7 +24,11 @@
         --bg: #f4f5f8;
         --fg: #0f172a;
         --muted: #64748b;
-        --accent: #0d9488;
+        /* Wordmark: teal anchor → warm “signal” → cool suffix */
+        --claw: #0f4c46;
+        --tv: #c2410c;
+        --os: #5f6c7b;
+        --accent: var(--claw);
         --font-wordmark: "Saira Extra Condensed", ui-sans-serif, system-ui,
           sans-serif;
         --font-ui: "Outfit", ui-sans-serif, system-ui, sans-serif;
@@ -41,10 +45,15 @@
         color: var(--fg);
         background: var(--bg);
         background-image: radial-gradient(
-          ellipse 90% 55% at 50% -15%,
-          rgba(13, 148, 136, 0.1),
-          transparent 52%
-        );
+            ellipse 95% 60% at 50% -18%,
+            rgba(15, 76, 70, 0.09),
+            transparent 45%
+          ),
+          radial-gradient(
+            ellipse 70% 45% at 100% 0%,
+            rgba(194, 65, 12, 0.05),
+            transparent 50%
+          );
         display: flex;
         flex-direction: column;
       }
@@ -68,15 +77,15 @@
       }
       h1 .claw {
         font-weight: 700;
-        color: var(--accent);
+        color: var(--claw);
       }
       h1 .tv {
-        font-weight: 500;
-        color: var(--fg);
+        font-weight: 600;
+        color: var(--tv);
       }
       h1 .os {
         font-weight: 300;
-        color: var(--muted);
+        color: var(--os);
       }
       .tag {
         margin: 1.35rem auto 0;
@@ -101,7 +110,7 @@
         text-decoration: none;
       }
       footer a:hover {
-        color: var(--accent);
+        color: var(--claw);
       }
     </style>
   </head>
