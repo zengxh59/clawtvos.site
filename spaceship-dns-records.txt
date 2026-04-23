@@ -1,0 +1,18 @@
+# Spaceship DNS — clawtvos.com → GitHub Pages
+# 将下面 YOUR_GITHUB_USERNAME 换成你的 GitHub 用户名（与 Pages 默认域一致）。
+# 官方 IP 列表见：https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
+
+# 根域名 apex（主机名 @ 或 clawtvos.com，以 Spaceship 面板为准）
+类型 A    主机 @    值 185.199.108.153
+类型 A    主机 @    值 185.199.109.153
+类型 A    主机 @    值 185.199.110.153
+类型 A    主机 @    值 185.199.111.153
+
+# 可选 IPv6（推荐与 A 同时使用）
+类型 AAAA 主机 @    值 2606:50c0:8000::153
+类型 AAAA 主机 @    值 2606:50c0:8001::153
+类型 AAAA 主机 @    值 2606:50c0:8002::153
+类型 AAAA 主机 @    值 2606:50c0:8003::153
+
+# www 子域：CNAME 指向「用户名.github.io」，不要带仓库名
+类型 CNAME 主机 www  值 YOUR_GITHUB_USERNAME.github.io

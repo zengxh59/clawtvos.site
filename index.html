@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ClawTVOS</title>
+    <meta
+      name="description"
+      content="ClawTVOS — 面向大屏的简洁体验，站点建设中。"
+    />
+    <style>
+      :root {
+        --bg: #0c0e10;
+        --fg: #e8eaed;
+        --muted: #9aa0a6;
+        --accent: #14b8a6;
+        --accent-2: #f97316;
+        --card: #14181c;
+        --radius: 16px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", "PingFang SC",
+          "Microsoft YaHei", sans-serif;
+        background: radial-gradient(
+            120% 80% at 50% -20%,
+            rgba(20, 184, 166, 0.18),
+            transparent 55%
+          ),
+          var(--bg);
+        color: var(--fg);
+        line-height: 1.6;
+      }
+      .wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: clamp(1.25rem, 4vw, 2.5rem);
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      .brand {
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        font-size: 1.125rem;
+      }
+      .brand span {
+        color: var(--accent);
+      }
+      .pill {
+        font-size: 0.75rem;
+        padding: 0.35rem 0.65rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: var(--muted);
+      }
+      .hero {
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: var(--card);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+      }
+      .hero img {
+        display: block;
+        width: 100%;
+        height: auto;
+        vertical-align: middle;
+      }
+      main {
+        margin-top: 1.75rem;
+      }
+      h1 {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        font-weight: 650;
+        margin: 0 0 0.5rem;
+        letter-spacing: -0.02em;
+      }
+      p {
+        margin: 0;
+        color: var(--muted);
+        max-width: 42rem;
+      }
+      .cta-row {
+        margin-top: 1.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+      a.button {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.65rem 1rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #041015;
+        background: linear-gradient(135deg, var(--accent), #0d9488);
+      }
+      footer {
+        margin-top: 3rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.8125rem;
+        color: var(--muted);
+      }
+      a.inline {
+        color: var(--accent-2);
+        text-decoration: none;
+      }
+      a.inline:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="brand">Claw<span>TV</span>OS</div>
+        <div class="pill">Coming soon</div>
+      </header>
+
+      <div class="hero">
+        <img
+          src="assets/clawtvos-hero.png"
+          width="1920"
+          height="1080"
+          alt="ClawTVOS 界面概念图：大屏上的简洁媒体中心体验"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
+
+      <main>
+        <h1>大屏体验，由此开始</h1>
+        <p>
+          ClawTVOS 正在筹备中。当前页面用于验证域名、HTTPS 与发布流程；后续会在此陆续更新产品与文档。
+        </p>
+        <div class="cta-row">
+          <a class="button" href="https://github.com" rel="noreferrer">在 GitHub 关注进展</a>
+        </div>
+      </main>
+
+      <footer>
+        © <span id="y"></span> ClawTVOS ·
+        <a class="inline" href="https://clawtvos.com/">clawtvos.com</a>
+      </footer>
+    </div>
+    <script>
+      document.getElementById("y").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
