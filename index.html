@@ -11,12 +11,12 @@
     <title>ClawTVOS</title>
     <meta
       name="description"
-      content="ClawTVOS — calm software for the living-room screen."
+      content="ClawTVOS — agent-powered TV for a new era."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500&family=Saira+Extra+Condensed:wght@200;300;400;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -25,7 +25,9 @@
         --fg: #f4f5f7;
         --muted: #6b7280;
         --accent: #34d399;
-        --font: "Outfit", ui-sans-serif, system-ui, sans-serif;
+        --font-wordmark: "Saira Extra Condensed", ui-sans-serif, system-ui,
+          sans-serif;
+        --font-ui: "Outfit", ui-sans-serif, system-ui, sans-serif;
       }
       *,
       *::before,
@@ -35,7 +37,7 @@
       body {
         margin: 0;
         min-height: 100dvh;
-        font-family: var(--font);
+        font-family: var(--font-ui);
         color: var(--fg);
         background: var(--bg);
         background-image: radial-gradient(
@@ -57,10 +59,11 @@
       }
       h1 {
         margin: 0;
-        font-weight: 200;
-        font-size: clamp(3.25rem, 14vw, 8.5rem);
-        line-height: 0.95;
-        letter-spacing: -0.045em;
+        font-family: var(--font-wordmark);
+        font-weight: 300;
+        font-size: clamp(3.5rem, 15vw, 9.25rem);
+        line-height: 0.92;
+        letter-spacing: 0.02em;
         text-transform: uppercase;
       }
       h1 .claw {
@@ -71,14 +74,16 @@
         color: var(--accent);
       }
       h1 .os {
-        font-weight: 300;
+        font-weight: 400;
       }
       .tag {
-        margin: 1.25rem 0 0;
+        margin: 1.35rem auto 0;
+        max-width: 22rem;
         font-size: 0.8125rem;
         font-weight: 400;
-        letter-spacing: 0.28em;
-        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        line-height: 1.45;
+        text-transform: none;
         color: var(--muted);
       }
       footer {
@@ -103,7 +108,7 @@
       <h1 id="logo" aria-label="ClawTVOS">
         <span class="claw">Claw</span><span class="tv">TV</span><span class="os">OS</span>
       </h1>
-      <p class="tag">Living-room OS</p>
+      <p class="tag">Agent-powered TV for a new era.</p>
     </main>
     <footer>
       <span>© <span id="y"></span></span>
