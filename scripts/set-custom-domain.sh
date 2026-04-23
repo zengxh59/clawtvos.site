@@ -10,11 +10,12 @@ USER_LOGIN="$(gh api user -q .login)"
 REPO_NAME="${GITHUB_REPO_NAME:-clawtvos.site}"
 FULL_REPO="${USER_LOGIN}/${REPO_NAME}"
 
-gh api "repos/${FULL_REPO}/pages" -X PATCH \
-  -f cname='clawtvos.com' \
-  -F https_enforced=true 2>/dev/null || {
-  echo "若报错，请先在网页 Settings → Pages 保存一次 Custom domain，再重试。" >&2
+if ! gh api "repos/${FULL_REPO}/pages" -X PUT --input - <<JSON
+{"cname":"clawtvos.com","https_enforced":true,"source":{"branch":"main","path":"/"},"public":true}
+JSON
+then
+  echo "若提示证书尚未就绪：先在 Spaceship 配好 DNS，等待后再执行本脚本或在网页勾选 Enforce HTTPS。" >&2
   exit 1
-}
+fi
 
 echo "已请求将 Pages 自定义域名设为 clawtvos.com（HTTPS 在证书就绪后可于网页确认）。"
