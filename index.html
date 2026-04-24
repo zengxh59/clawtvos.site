@@ -1,133 +1,441 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="upgrade-insecure-requests"
-    />
-    <link rel="canonical" href="https://clawtvos.com/" />
-    <title>ClawTVOS</title>
-    <meta
-      name="description"
-      content="ClawTVOS — agent-powered TV for a new era."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500&family=Saira+Extra+Condensed:wght@200;300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --bg: #f4f5f8;
-        --fg: #0f172a;
-        --muted: #64748b;
-        /* Wordmark: teal anchor → warm “signal” → cool suffix */
-        --claw: #0f4c46;
-        --tv: #c2410c;
-        --os: #5f6c7b;
-        --accent: var(--claw);
-        --font-wordmark: "Saira Extra Condensed", ui-sans-serif, system-ui,
-          sans-serif;
-        --font-ui: "Outfit", ui-sans-serif, system-ui, sans-serif;
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+  <link rel="canonical" href="https://clawtvos.com/" />
+  <title>ClawTVOS — AI Agent-Powered TV</title>
+  <meta name="description" content="ClawTVOS — bringing AI agent intelligence to smart TV operating systems." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Saira+Extra+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Variables ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #07080c;
+      --surface: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.06);
+      --fg: #e4e7ef;
+      --muted: #6b7394;
+      --claw: #00e0a0;
+      --claw-dim: rgba(0,224,160,0.12);
+      --tv: #ff6b35;
+      --tv-dim: rgba(255,107,53,0.12);
+      --os: #8b93b3;
+      --glow-claw: 0 0 60px rgba(0,224,160,0.15), 0 0 120px rgba(0,224,160,0.06);
+      --glow-tv: 0 0 40px rgba(255,107,53,0.12);
+      --font-wordmark: "Saira Extra Condensed", ui-sans-serif, system-ui, sans-serif;
+      --font-ui: "Inter", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100dvh;
+      font-family: var(--font-ui);
+      color: var(--fg);
+      background: var(--bg);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Canvas Background ── */
+    #bg-canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── Grid Overlay ── */
+    .grid-overlay {
+      position: fixed; inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 70% 50% at 50% 40%, black, transparent);
+      -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 40%, black, transparent);
+    }
+
+    /* ── Main Layout ── */
+    main {
+      position: relative;
+      z-index: 1;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
+      text-align: center;
+      gap: 0;
+    }
+
+    /* ── Status Badge ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      backdrop-filter: blur(12px);
+      animation: fadeInDown 0.8s ease-out both;
+    }
+    .badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--claw);
+      box-shadow: 0 0 8px var(--claw);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* ── Wordmark ── */
+    h1 {
+      font-family: var(--font-wordmark);
+      font-weight: 300;
+      font-size: clamp(4rem, 16vw, 10rem);
+      line-height: 0.9;
+      letter-spacing: 0.015em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+      animation: fadeInUp 0.8s ease-out 0.15s both;
+    }
+    h1 .claw {
+      font-weight: 700;
+      color: var(--claw);
+      text-shadow: var(--glow-claw);
+    }
+    h1 .tv {
+      font-weight: 600;
+      color: var(--tv);
+      text-shadow: var(--glow-tv);
+    }
+    h1 .os {
+      font-weight: 300;
+      color: var(--os);
+    }
+
+    /* ── Tagline ── */
+    .tagline {
+      font-size: clamp(0.85rem, 2vw, 1.05rem);
+      font-weight: 400;
+      color: var(--muted);
+      max-width: 28rem;
+      line-height: 1.55;
+      letter-spacing: 0.01em;
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 0.8s ease-out 0.3s both;
+    }
+    .tagline strong {
+      color: var(--fg);
+      font-weight: 500;
+    }
+
+    /* ── Terminal Block ── */
+    .terminal {
+      width: 100%;
+      max-width: 520px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+      animation: fadeInUp 0.8s ease-out 0.45s both;
+    }
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.015);
+    }
+    .terminal-bar span {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+    .terminal-bar span:nth-child(1) { background: #ff5f57; }
+    .terminal-bar span:nth-child(2) { background: #febc2e; }
+    .terminal-bar span:nth-child(3) { background: #28c840; }
+    .terminal-bar .title {
+      flex: 1;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .terminal-body {
+      padding: 1.2rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.75;
+      color: var(--muted);
+      text-align: left;
+    }
+    .terminal-body .prompt {
+      color: var(--claw);
+      user-select: none;
+    }
+    .terminal-body .cmd {
+      color: var(--fg);
+    }
+    .terminal-body .output {
+      color: var(--muted);
+    }
+    .terminal-body .cursor {
+      display: inline-block;
+      width: 7px;
+      height: 14px;
+      background: var(--claw);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+
+    /* ── Feature Pills ── */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 2.5rem;
+      animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      transition: border-color 0.3s, color 0.3s, background 0.3s;
+    }
+    .pill:hover {
+      border-color: rgba(0,224,160,0.25);
+      color: var(--fg);
+      background: var(--claw-dim);
+    }
+    .pill .icon {
+      font-size: 0.85rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      background: rgba(7,8,12,0.6);
+      backdrop-filter: blur(12px);
+    }
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    footer a:hover { color: var(--claw); }
+
+    /* ── Animations ── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0; }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .terminal { border-radius: 8px; }
+      .features { gap: 0.4rem; }
+      .pill { font-size: 0.65rem; padding: 0.35rem 0.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="bg-canvas"></canvas>
+  <div class="grid-overlay"></div>
+
+  <main>
+    <div class="badge">
+      <span class="dot"></span>
+      AI Agent System Active
+    </div>
+
+    <h1 aria-label="ClawTVOS">
+      <span class="claw">Claw</span><span class="tv">TV</span><span class="os">OS</span>
+    </h1>
+
+    <p class="tagline">
+      Bringing <strong>OpenClaw AI agents</strong> to the big screen —
+      an intelligent operating system that understands, reasons, and acts
+      on your TV.
+    </p>
+
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span></span><span></span><span></span>
+        <span class="title">clawtvos — agent shell</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="prompt">$ </span><span class="cmd">claw agent --start --tv</span></div>
+        <div class="output">→ Connecting to ClawTVOS runtime...</div>
+        <div class="output">→ Vision model loaded ✓</div>
+        <div class="output">→ Natural language interface ready ✓</div>
+        <div class="output">→ Smart home control linked ✓</div>
+        <div><span class="prompt">$ </span><span class="cursor"></span></div>
+      </div>
+    </div>
+
+    <div class="features">
+      <span class="pill"><span class="icon">🧠</span> AI Reasoning</span>
+      <span class="pill"><span class="icon">👁️</span> Vision Understanding</span>
+      <span class="pill"><span class="icon">🗣️</span> Voice Control</span>
+      <span class="pill"><span class="icon">🏠</span> Smart Home</span>
+      <span class="pill"><span class="icon">📺</span> Content Discovery</span>
+    </div>
+  </main>
+
+  <footer>
+    <span>© <span id="y"></span> ClawTVOS</span>
+    ·
+    <a href="https://clawtvos.com/">clawtvos.com</a>
+  </footer>
+
+  <script>
+    // ── Dynamic year ──
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // ── Particle Canvas Background ──
+    (function () {
+      const canvas = document.getElementById('bg-canvas');
+      const ctx = canvas.getContext('2d');
+      let w, h, particles, mouse;
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
       }
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
+
+      mouse = { x: w / 2, y: h / 2 };
+      window.addEventListener('mousemove', function (e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
+      function createParticles() {
+        const count = Math.min(Math.floor((w * h) / 12000), 120);
+        particles = [];
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
+            r: Math.random() * 1.2 + 0.4,
+            color: Math.random() > 0.6
+              ? 'rgba(0,224,160,' + (Math.random() * 0.3 + 0.1).toFixed(2) + ')'
+              : 'rgba(255,255,255,' + (Math.random() * 0.12 + 0.03).toFixed(2) + ')'
+          });
+        }
       }
-      body {
-        margin: 0;
-        min-height: 100dvh;
-        font-family: var(--font-ui);
-        color: var(--fg);
-        background: var(--bg);
-        background-image: radial-gradient(
-            ellipse 95% 60% at 50% -18%,
-            rgba(15, 76, 70, 0.09),
-            transparent 45%
-          ),
-          radial-gradient(
-            ellipse 70% 45% at 100% 0%,
-            rgba(194, 65, 12, 0.05),
-            transparent 50%
-          );
-        display: flex;
-        flex-direction: column;
+
+      function draw() {
+        ctx.clearRect(0, 0, w, h);
+
+        // Gradient orbs
+        const g1 = ctx.createRadialGradient(w * 0.3, h * 0.3, 0, w * 0.3, h * 0.3, w * 0.45);
+        g1.addColorStop(0, 'rgba(0,224,160,0.04)');
+        g1.addColorStop(1, 'transparent');
+        ctx.fillStyle = g1;
+        ctx.fillRect(0, 0, w, h);
+
+        const g2 = ctx.createRadialGradient(w * 0.75, h * 0.6, 0, w * 0.75, h * 0.6, w * 0.35);
+        g2.addColorStop(0, 'rgba(255,107,53,0.03)');
+        g2.addColorStop(1, 'transparent');
+        ctx.fillStyle = g2;
+        ctx.fillRect(0, 0, w, h);
+
+        // Particles
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0) p.x = w;
+          if (p.x > w) p.x = 0;
+          if (p.y < 0) p.y = h;
+          if (p.y > h) p.y = 0;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+
+          // Connect nearby particles
+          for (let j = i + 1; j < particles.length; j++) {
+            const q = particles[j];
+            const dx = p.x - q.x;
+            const dy = p.y - q.y;
+            const dist = dx * dx + dy * dy;
+            if (dist < 18000) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              const alpha = (1 - dist / 18000) * 0.12;
+              ctx.strokeStyle = 'rgba(0,224,160,' + alpha.toFixed(3) + ')';
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+
+        requestAnimationFrame(draw);
       }
-      main {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: clamp(1.5rem, 5vw, 3rem);
-        text-align: center;
-      }
-      h1 {
-        margin: 0;
-        font-family: var(--font-wordmark);
-        font-weight: 300;
-        font-size: clamp(3.5rem, 15vw, 9.25rem);
-        line-height: 0.92;
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
-      }
-      h1 .claw {
-        font-weight: 700;
-        color: var(--claw);
-      }
-      h1 .tv {
-        font-weight: 600;
-        color: var(--tv);
-      }
-      h1 .os {
-        font-weight: 300;
-        color: var(--os);
-      }
-      .tag {
-        margin: 1.35rem auto 0;
-        max-width: 22rem;
-        font-size: 0.8125rem;
-        font-weight: 400;
-        letter-spacing: 0.06em;
-        line-height: 1.45;
-        text-transform: none;
-        color: var(--muted);
-      }
-      footer {
-        padding: 1.25rem;
-        text-align: center;
-        font-size: 0.75rem;
-        font-weight: 400;
-        letter-spacing: 0.06em;
-        color: var(--muted);
-      }
-      footer a {
-        color: inherit;
-        text-decoration: none;
-      }
-      footer a:hover {
-        color: var(--claw);
-      }
-    </style>
-  </head>
-  <body>
-    <main>
-      <h1 id="logo" aria-label="ClawTVOS">
-        <span class="claw">Claw</span><span class="tv">TV</span><span class="os">OS</span>
-      </h1>
-      <p class="tag">Agent-powered TV for a new era.</p>
-    </main>
-    <footer>
-      <span>© <span id="y"></span></span>
-      ·
-      <a href="https://clawtvos.com/">clawtvos.com</a>
-    </footer>
-    <script>
-      document.getElementById("y").textContent = new Date().getFullYear();
-    </script>
-  </body>
+
+      resize();
+      createParticles();
+      draw();
+
+      window.addEventListener('resize', function () {
+        resize();
+        createParticles();
+      });
+    })();
+  </script>
+</body>
 </html>
