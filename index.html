@@ -420,6 +420,14 @@
       const ctx = canvas.getContext('2d');
       let w, h, particles;
 
+      const mouse = { x: -999, y: -999 };
+      const ATTRACT_RADIUS = 160;
+
+      document.addEventListener('mousemove', function (e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
       function resize() {
         w = canvas.width = window.innerWidth;
         h = canvas.height = window.innerHeight;
@@ -460,9 +468,20 @@
         ctx.fillStyle = a2;
         ctx.fillRect(0, 0, w, h);
 
-        // Particles
+        // Particles with mouse gravity
         for (let i = 0; i < particles.length; i++) {
           const p = particles[i];
+
+          // Mouse attraction
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < ATTRACT_RADIUS && dist > 1) {
+            const force = (1 - dist / ATTRACT_RADIUS) * 0.012;
+            p.vx += dx / dist * force;
+            p.vy += dy / dist * force;
+          }
+
           p.vx *= 0.995;
           p.vy *= 0.995;
           p.x += p.vx;
@@ -473,11 +492,20 @@
           if (p.y < -10) p.y = h + 10;
           if (p.y > h + 10) p.y = -10;
 
+          // Proximity boost: alpha & size
+          let alpha = p.baseAlpha;
+          let drawR = p.r;
+          if (dist < ATTRACT_RADIUS) {
+            const prox = 1 - dist / ATTRACT_RADIUS;
+            alpha = Math.min(p.baseAlpha + prox * 0.5, 0.9);
+            drawR = p.r + prox * 1.5;
+          }
+
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, drawR, 0, Math.PI * 2);
           ctx.fillStyle = p.isAccent
-            ? 'rgba(0,224,160,' + p.baseAlpha.toFixed(3) + ')'
-            : 'rgba(255,255,255,' + p.baseAlpha.toFixed(3) + ')';
+            ? 'rgba(0,224,160,' + alpha.toFixed(3) + ')'
+            : 'rgba(255,255,255,' + alpha.toFixed(3) + ')';
           ctx.fill();
 
           for (let j = i + 1; j < particles.length; j++) {
@@ -486,10 +514,19 @@
             const ddy = p.y - q.y;
             const dd = ddx * ddx + ddy * ddy;
             if (dd < 20000) {
+              const lineAlpha = (1 - dd / 20000) * 0.14;
+              // Lines near mouse glow brighter
+              let boost = 1;
+              const mx = (p.x + q.x) / 2;
+              const my = (p.y + q.y) / 2;
+              const mld = Math.sqrt((mouse.x - mx) ** 2 + (mouse.y - my) ** 2);
+              if (mld < ATTRACT_RADIUS) {
+                boost = 1 + (1 - mld / ATTRACT_RADIUS) * 2.5;
+              }
               ctx.beginPath();
               ctx.moveTo(p.x, p.y);
               ctx.lineTo(q.x, q.y);
-              ctx.strokeStyle = 'rgba(0,224,160,' + ((1 - dd / 20000) * 0.12).toFixed(3) + ')';
+              ctx.strokeStyle = 'rgba(0,224,160,' + Math.min(lineAlpha * boost, 0.35).toFixed(3) + ')';
               ctx.lineWidth = 0.5;
               ctx.stroke();
             }
